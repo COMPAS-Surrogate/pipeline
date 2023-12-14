@@ -11,6 +11,7 @@ from lnl_computer.cli.main import (batch_lnl_generation, combine_lnl_data,
 from lnl_surrogate.models.sklearn_gp_model import SklearnGPModel
 from scipy.optimize import minimize
 from scipy.stats import norm
+import shutil
 
 LNL_CSV = "combined_lnl_data.csv"
 PARAM_CSV = "parameter_table.csv"
@@ -78,7 +79,7 @@ def update_parameter_table_with_acquisition_function(train_data, outdir):
     )
     # save new_asf to asf_csv
     new_asf_df = pd.DataFrame({"aSF": new_asf})
-    new_asf_df.to_csv(f"{outdir}/{PARAM_CSV}", index=False)
+    new_asf_df.to_csv(f"{PARAM_CSV}", index=False)
 
 
 def expected_improvement(x, model, evaluated_loss, greater_is_better=False, n_params=1):
@@ -179,8 +180,11 @@ def sample_next_hyperparameter(
 def test_lnl_pipeline(tmp_path):
     np.random.seed(42)
     outdir = f"{tmp_path}/test_lnl_pipeline"
+    if os.path.exists(outdir):
+        shutil.rmtree(outdir)
     os.makedirs(outdir, exist_ok=True)
-    init_npts = 2
+
+    init_npts = 5
     _setup(asf_csv=PARAM_CSV, outdir=outdir, init_npts=init_npts)
 
     npts = 0
