@@ -39,7 +39,7 @@ for i in range(N_matrices):
             fig.savefig(f"{outdir}/v0.png")
 
 uni = Universe.from_h5(f"{outdir}/v0.h5")
-mock_pop = MockPopulation.sample_possible_event_matrix(uni)
+mock_pop = MockPopulation.from_mcz_grid(uni)
 mock_pop.save(f"{outdir}/mock_pop.npz")
 fig = mock_pop.plot()
 fig.savefig(f"{outdir}/mock_pop.png")

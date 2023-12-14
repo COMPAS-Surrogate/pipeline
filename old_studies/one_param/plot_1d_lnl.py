@@ -41,13 +41,13 @@ def main():
 
     for idx in IDX:
         mock_uni = Universe.from_hdf5(grid_fn, idx)
-        mock_population = mock_uni.sample_possible_event_matrix()
+        mock_population = mock_uni.from_mcz_grid()
 
         outdir = f"mock_uni_{idx}"
         cache = get_training_lnl_cache(
             outdir=outdir + "/large_cache",
             det_matrix_h5=grid_fn,
-            mock_uni=mock_population.universe,
+            mock_uni=mock_population.mcz_grid,
             clean=False,
         )
 

@@ -83,24 +83,24 @@ def make_plots(cache, mock_uni, label=""):
 
 def main_plotter(large_grid, zoom_in_grid, idx):
     mock_uni = Universe.from_hdf5(zoom_in_grid, idx)
-    mock_population = mock_uni.sample_possible_event_matrix()
+    mock_population = mock_uni.from_mcz_grid()
 
     outdir = f"mock_uni_{idx}"
     large_cache = get_training_lnl_cache(
         outdir=outdir + "/large_cache",
         det_matrix_h5=large_grid,
-        mock_uni=mock_population.universe,
+        mock_uni=mock_population.mcz_grid,
         clean=False,
     )
     zoom_cache = get_training_lnl_cache(
         outdir=outdir + "/zoom_cache",
         det_matrix_h5=zoom_in_grid,
-        mock_uni=mock_population.universe,
+        mock_uni=mock_population.mcz_grid,
         clean=False,
     )
-    fig_full, _ = make_plots(large_cache, mock_population.universe, label="Full range")
+    fig_full, _ = make_plots(large_cache, mock_population.mcz_grid, label="Full range")
     fig_zoom, zoom_range = make_plots(
-        zoom_cache, mock_population.universe, label="Zoom"
+        zoom_cache, mock_population.mcz_grid, label="Zoom"
     )
     ax = fig_full.get_axes()[0]
     ax.add_patch(
@@ -142,7 +142,7 @@ def main_plotter(large_grid, zoom_in_grid, idx):
     fig.suptitle("Matrix using Max LnL SF params", fontsize=10)
     fig.savefig(f"{outdir}/max_lnl_uni.png")
 
-    fig = mock_population.universe.plot_detection_rate_matrix(
+    fig = mock_population.mcz_grid.plot_detection_rate_matrix(
         save=False, scatter_events=mock_population.mcz
     )
     fig.suptitle("Matrix using Injected SF params", fontsize=10)
