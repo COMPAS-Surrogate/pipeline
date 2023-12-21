@@ -12,7 +12,7 @@ TEST_FILE = os.path.join(TEST_DIR, "mock_COMPAS_output.h5")
 
 
 @pytest.fixture
-def test_datapath():
+def test_datapaths():
     """Test data."""
     if os.path.exists(TEST_FILE):
         return TEST_FILE
