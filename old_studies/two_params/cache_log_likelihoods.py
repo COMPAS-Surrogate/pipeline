@@ -55,7 +55,7 @@ def main(universes_glob=GLOB_STR, cache_lnl_file=CACHE_LNL_FILE):
     universe_paths = glob(universes_glob)
     uni_path = random.choice(universe_paths)
     observed_uni = Universe.from_npz(uni_path)
-    mock_population = observed_uni.sample_possible_event_matrix()
+    mock_population = observed_uni.from_mcz_grid()
     mock_population.plot(save=True)
     compute_and_cache_lnl(
         mock_population, cache_lnl_file, universe_paths=universe_paths
