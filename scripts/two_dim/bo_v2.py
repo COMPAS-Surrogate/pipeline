@@ -4,7 +4,8 @@ from trieste.acquisition.function import PredictiveVariance, ExpectedImprovement
 from lnl_computer.cosmic_integration.mcz_grid import McZGrid
 from lnl_computer.cosmic_integration.star_formation_paramters import get_star_formation_prior
 import tensorflow as tf
-from lnl_surrogate.active_learner import train_and_save_lnl_surrogate
+
+
 import matplotlib.pyplot as plt
 
 import trieste
@@ -74,10 +75,11 @@ def main(outdir=OUTDIR, acquisition_fns=[_pi, _ei]):
         idx_best=gp_arg_min_idx,
     )
     ax.set_xlim(left=N_INIT)
-    ax.set_ylim(bottom=TRUE_LNL - 5000, top=-50000)
+    # ax.set_ylim(bottom=TRUE_LNL - 5000, top=-50000)
     ax.axhline(TRUE_LNL, color="tab:red")
     ax.set_xlabel("# Evaluations")
     ax.set_ylabel("Regret")
+    np.savetxt(os.path.join(outdir, "y.txt"), gp_observations)
     plt.tight_layout()
     plt.savefig(os.path.join(outdir, "regret.png"))
     return gp_observations
@@ -112,7 +114,7 @@ ei_obs = main('out_ei', acquisition_fns=[_ei])
 both_obs = main('out_both', acquisition_fns=[_pi, _ei])
 
 fig, ax = plt.subplots(1, 1)
-max_accum = -100000000
+# max_accum = -100000000
 for i, (obs, label) in enumerate(zip([pi_obs, ei_obs, both_obs], ['pi', 'ei', 'both'])):
 
     accum = np.minimum.accumulate(obs)
@@ -121,10 +123,10 @@ for i, (obs, label) in enumerate(zip([pi_obs, ei_obs, both_obs], ['pi', 'ei', 'b
     pts = np.arange(N_INIT, N_INIT + len(accum))
     ax.plot(pts, accum, color=f"C{i}", label=label)
 
-    if np.max(accum) > max_accum:
-        max_accum = np.max(accum)
+    # if np.max(accum) > max_accum:
+    #     max_accum = np.max(accum)
 
-ax.set_ylim(bottom=TRUE_LNL - 5000, top=max_accum)
+# ax.set_ylim(bottom=TRUE_LNL - 5000, top=max_accum)
 ax.axhline(TRUE_LNL, color="tab:red")
 ax.set_xlabel("# Evaluations")
 ax.set_ylabel("Regret")
