@@ -14,7 +14,7 @@ for param in params:
         RegretData(data_fmt.format(param=param, label=labels[i].lower()), labels[i], colors[i]) for i in range(3)
     ]
     plot_multiple_regrets(
-        regret_data, fname=f'outdir/gp_{param}/regret.png',
+        regret_data, fname=f'outdir_rel/gp_{param}/regret.png',
         true_min=mock_data.truth['lnl'],
     )
 

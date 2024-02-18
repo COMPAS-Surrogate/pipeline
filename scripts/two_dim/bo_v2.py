@@ -25,13 +25,16 @@ from lnl_computer.observation.mock_observation import MockObservation
 from lnl_computer.mock_data import MockData, generate_mock_data
 from lnl_computer.cosmic_integration.mcz_grid import McZGrid
 from lnl_computer.cosmic_integration.star_formation_paramters import get_star_formation_prior
+from lnl_surrogate.surrogate import train
 
 import numpy as np
+
+PARAMS = ['aSF', 'dSF']
 
 OUTDIR = 'out_test'
 MOCK_DATA: MockData = generate_mock_data(outdir=OUTDIR)
 TRUE = {
-    k: MOCK_DATA.observations.mcz_grid.cosmological_parameters[k] for k in ['aSF', 'sigma_0']
+    k: MOCK_DATA.observations.mcz_grid.cosmological_parameters[k] for k in PARAMS
 }
 TRUE_LNL = McZGrid.lnl(
     mcz_obs=MOCK_DATA.observations.mcz,
@@ -49,17 +52,21 @@ N_OPT_STEPS = 10
 
 
 def main(outdir=OUTDIR, acquisition_fns=[_pi, _ei]):
-    result = train_and_save_lnl_surrogate(
+    result = train(
         model_type='gp',
         mcz_obs=MOCK_DATA.observations.mcz,
         compas_h5_filename=MOCK_DATA.compas_filename,
-        params=['aSF', 'sigma0'],
+        params=PARAMS,
         acquisition_fns=acquisition_fns,
         n_init=N_INIT,
         n_rounds=N_ROUDNS,
         n_pts_per_round=N_OPT_STEPS,
         outdir=outdir,
-        model_plotter=plot_model_and_data
+        model_plotter=plot_model_and_data,
+        truth={
+            **TRUE,
+            "lnl": TRUE_LNL
+        }
     )
 
     gp_dataset = result.try_get_final_dataset()
@@ -103,8 +110,8 @@ def plot_model_and_data(
     ax[0, 0].scatter(data[:, 0], data[:, 1], c='black', marker='x', zorder=100)
     ax[0, 1].scatter(data[:, 0], data[:, 1], c='black', marker='x', zorder=100)
 
-    ax[0, 0].scatter(TRUE['aSF'], TRUE['sigma_0'], marker='*', zorder=1000, color='red')
-    ax[0, 1].scatter(TRUE['aSF'], TRUE['sigma_0'], marker='*', zorder=1000, color='red')
+    ax[0, 0].scatter(TRUE[PARAMS[0]], TRUE[PARAMS[1]], marker='*', zorder=1000, color='red')
+    ax[0, 1].scatter(TRUE[PARAMS[0]], TRUE[PARAMS[1]], marker='*', zorder=1000, color='red')
 
     return fig
 
