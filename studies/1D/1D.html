@@ -474,8 +474,7 @@ document.write(`
 
 <span class="n">mock_data</span> <span class="o">=</span> <span class="n">generate_mock_data</span><span class="p">(</span><span class="n">OUTDIR</span><span class="p">)</span>
 
-<span class="c1"># %%</span>
-<span class="c1">## Exploratory Acquisition Function</span>
+
 <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;dSF&#39;</span><span class="p">,</span> <span class="s1">&#39;muz&#39;</span><span class="p">,</span> <span class="s1">&#39;sigma0&#39;</span><span class="p">,</span> <span class="s1">&#39;aSF&#39;</span><span class="p">]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gp&#39;</span><span class="p">,</span>
@@ -497,16 +496,7 @@ document.write(`
         <span class="n">acquisition_fns</span><span class="o">=</span><span class="p">[</span><span class="n">PredictiveVariance</span><span class="p">(),</span> <span class="n">ExpectedImprovement</span><span class="p">()],</span>
         <span class="n">outdir</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">OUTDIR</span><span class="si">}</span><span class="s2">/gp_</span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">/both&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="n">acquisition_fns</span><span class="o">=</span><span class="p">[</span><span class="n">ExpectedImprovement</span><span class="p">()],</span>
-        <span class="n">outdir</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">OUTDIR</span><span class="si">}</span><span class="s2">/gp_</span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">/exploit&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="n">acquisition_fns</span><span class="o">=</span><span class="p">[</span><span class="n">PredictiveVariance</span><span class="p">()],</span>
-        <span class="n">outdir</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">OUTDIR</span><span class="si">}</span><span class="s2">/gp_</span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">/explore&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+
 </pre></div>
 </div>
 </section>
