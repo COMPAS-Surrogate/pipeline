@@ -1,0 +1,25 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: Pipeline
+author: Avi
+
+execute:
+  execute_notebooks: "off"
+
+
+repository:
+  url: https://github.com/COMPAS-Surrogate/pipeline/ # Online location of your book
+  path_to_book: docs # Optional path to your book, relative to the repository root
+  branch: main # Which branch of the repository should be used when creating links (optional)
+
+html:
+  use_issues_button: true
+  use_repository_button: true
+
+sphinx:
+  extra_extensions:
+    - sphinx.ext.autodoc
+  config:
+    html_js_files:
+    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js

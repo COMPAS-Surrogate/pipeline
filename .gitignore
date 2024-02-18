@@ -5,7 +5,8 @@ __pycache__/
 *tfevents*
 # C extensions
 *.so
-
+*.json
+*.html
 # Distribution / packaging
 .Python
 build/
@@ -19,6 +20,8 @@ lib64/
 parts/
 sdist/
 var/
+bo_result/
+
 wheels/
 share/python-wheels/
 *.egg-info/

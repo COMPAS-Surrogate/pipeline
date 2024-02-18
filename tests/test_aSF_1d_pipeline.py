@@ -13,6 +13,7 @@ from lnl_computer.cosmic_integration.star_formation_paramters import get_star_fo
 from lnl_surrogate.models.sklearn_gp_model import SklearnGPModel
 from lnl_surrogate.active_learner import query_points
 from lnl_surrogate.acquisition.ei import expected_improvement
+from lnl_surrogate.surrogate import get_star_formation_prior
 from scipy.optimize import minimize
 from scipy.stats import norm
 import shutil
