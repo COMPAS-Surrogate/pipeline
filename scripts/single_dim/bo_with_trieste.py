@@ -53,7 +53,7 @@ def f(x):
             mcz_obs=MOCK_DATA.observations.mcz,
             duration=1,
             compas_h5_path=MOCK_DATA.compas_filename,
-            sf_sample=dict(aSF=_xi[0], dSF=4.70, mu_z=-0.23, sigma_z=0.0),
+            sf_sample=dict(aSF=_xi[0], dSF=4.70, muz=-0.23, sigma0=0.0),
             n_bootstraps=0,
         )[0] * -1 for _xi in x
     ]
