@@ -37,7 +37,7 @@ def plot_res(model, data, search_space: SearchSpace):
 mock_data = generate_mock_data(OUTDIR)
 
 
-for param in ['dSF', 'muz', 'sigma0', 'aSF']:
+for param in [ 'mu_z', 'sigma_0', 'aSF', 'dSF',]:
     kwargs = dict(
         model_type='gp',
         mcz_obs=mock_data.observations.mcz,
