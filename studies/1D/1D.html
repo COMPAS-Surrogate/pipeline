@@ -386,16 +386,16 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>dSF</p></td>
-<td><p><img alt="dSF_regret" src="../../_images/regret.png" /></p></td>
+<td><p><img alt="dSF_regret" src="studies/1D/outdir/gp_dSF/regret.png" /></p></td>
 </tr>
 <tr class="row-odd"><td><p>aSF</p></td>
-<td><p><img alt="aSF_regret" src="../../_images/regret1.png" /></p></td>
+<td><p><img alt="aSF_regret" src="studies/1D/outdir/gp_aSF/regret.png" /></p></td>
 </tr>
 <tr class="row-even"><td><p>MuZ</p></td>
-<td><p><img alt="muz_regret" src="../../_images/regret2.png" /></p></td>
+<td><p><img alt="muz_regret" src="studies/1D/outdir/gp_muz/regret.png" /></p></td>
 </tr>
 <tr class="row-odd"><td><p>Sigma0</p></td>
-<td><p><img alt="sigma0_regret" src="../../_images/regret3.png" /></p></td>
+<td><p><img alt="sigma0_regret" src="studies/1D/outdir/gp_sigma0/regret.png" /></p></td>
 </tr>
 </tbody>
 </table>
@@ -412,24 +412,24 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>dSF</p></td>
-<td><p><img alt="dSF_explore" src="../../_images/rounds.gif" /></p></td>
-<td><p><img alt="dSF_exploit" src="../../_images/rounds1.gif" /></p></td>
-<td><p><img alt="dSF_both" src="../../_images/rounds2.gif" /></p></td>
+<td><p><img alt="dSF_explore" src="studies/1D/outdir/gp_dSF/explore/plots/rounds.gif" /></p></td>
+<td><p><img alt="dSF_exploit" src="studies/1D/outdir/gp_dSF/exploit/plots/rounds.gif" /></p></td>
+<td><p><img alt="dSF_both" src="studies/1D/outdir/gp_dSF/both/plots/rounds.gif" /></p></td>
 </tr>
 <tr class="row-odd"><td><p>aSF</p></td>
-<td><p><img alt="aSF_explore" src="../../_images/rounds3.gif" /></p></td>
-<td><p><img alt="aSF_exploit" src="../../_images/rounds4.gif" /></p></td>
-<td><p><img alt="aSF_both" src="../../_images/rounds5.gif" /></p></td>
+<td><p><img alt="aSF_explore" src="studies/1D/outdir/gp_aSF/explore/plots/rounds.gif" /></p></td>
+<td><p><img alt="aSF_exploit" src="studies/1D/outdir/gp_aSF/exploit/plots/rounds.gif" /></p></td>
+<td><p><img alt="aSF_both" src="studies/1D/outdir/gp_aSF/both/plots/rounds.gif" /></p></td>
 </tr>
 <tr class="row-even"><td><p>MuZ</p></td>
-<td><p><img alt="muz_explore" src="../../_images/rounds6.gif" /></p></td>
-<td><p><img alt="muz_exploit" src="../../_images/rounds7.gif" /></p></td>
-<td><p><img alt="muz_both" src="../../_images/rounds8.gif" /></p></td>
+<td><p><img alt="muz_explore" src="studies/1D/outdir/gp_muz/explore/plots/rounds.gif" /></p></td>
+<td><p><img alt="muz_exploit" src="studies/1D/outdir/gp_muz/exploit/plots/rounds.gif" /></p></td>
+<td><p><img alt="muz_both" src="studies/1D/outdir/gp_muz/both/plots/rounds.gif" /></p></td>
 </tr>
 <tr class="row-odd"><td><p>Sigma0</p></td>
-<td><p><img alt="sigma0_explore" src="../../_images/rounds9.gif" /></p></td>
-<td><p><img alt="sigma0_exploit" src="../../_images/rounds10.gif" /></p></td>
-<td><p><img alt="sigma0_both" src="../../_images/rounds11.gif" /></p></td>
+<td><p><img alt="sigma0_explore" src="studies/1D/outdir/gp_sigma0/explore/plots/rounds.gif" /></p></td>
+<td><p><img alt="sigma0_exploit" src="studies/1D/outdir/gp_sigma0/exploit/plots/rounds.gif" /></p></td>
+<td><p><img alt="sigma0_both" src="studies/1D/outdir/gp_sigma0/both/plots/rounds.gif" /></p></td>
 </tr>
 </tbody>
 </table>
@@ -475,7 +475,7 @@ document.write(`
 <span class="n">mock_data</span> <span class="o">=</span> <span class="n">generate_mock_data</span><span class="p">(</span><span class="n">OUTDIR</span><span class="p">)</span>
 
 
-<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;dSF&#39;</span><span class="p">,</span> <span class="s1">&#39;muz&#39;</span><span class="p">,</span> <span class="s1">&#39;sigma0&#39;</span><span class="p">,</span> <span class="s1">&#39;aSF&#39;</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;mu_z&#39;</span><span class="p">,</span> <span class="s1">&#39;sigma_0&#39;</span><span class="p">,</span> <span class="s1">&#39;aSF&#39;</span><span class="p">,</span> <span class="s1">&#39;dSF&#39;</span><span class="p">,]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gp&#39;</span><span class="p">,</span>
         <span class="n">mcz_obs</span><span class="o">=</span><span class="n">mock_data</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">mcz</span><span class="p">,</span>
