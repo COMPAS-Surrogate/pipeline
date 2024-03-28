@@ -436,8 +436,7 @@ document.write(`
 </section>
 <section id="source">
 <h2>Source:<a class="headerlink" href="#source" title="Permalink to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%</span>
-<span class="kn">from</span> <span class="nn">trieste.acquisition.function</span> <span class="kn">import</span> <span class="n">PredictiveVariance</span><span class="p">,</span> <span class="n">ExpectedImprovement</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">trieste.acquisition.function</span> <span class="kn">import</span> <span class="n">PredictiveVariance</span><span class="p">,</span> <span class="n">ExpectedImprovement</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">lnl_surrogate.surrogate</span> <span class="kn">import</span> <span class="n">train</span>
@@ -453,12 +452,20 @@ document.write(`
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">plot_res</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">search_space</span><span class="p">:</span> <span class="n">SearchSpace</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_res</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">search_space</span><span class="p">:</span> <span class="n">SearchSpace</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">search_space</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">search_space</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># true_y = NORM.logpdf(x) * -1.0</span>
     <span class="n">model_y</span><span class="p">,</span> <span class="n">model_yunc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">x_obs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query_points</span>
     <span class="n">y_obs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">observations</span>
+
+    <span class="n">truths</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">]</span>
+    <span class="c1"># get keys that arnt lnl</span>
+    <span class="n">parm_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">truths</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">parm_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;lnl&#39;</span><span class="p">)</span>
+    <span class="n">param</span> <span class="o">=</span> <span class="n">parm_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">true_val</span> <span class="o">=</span> <span class="n">truths</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+
 
     <span class="n">tf_to_np</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span>
     <span class="c1"># make new fig</span>
@@ -468,33 +475,31 @@ document.write(`
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
     <span class="n">yup</span><span class="p">,</span> <span class="n">ydown</span> <span class="o">=</span> <span class="n">tf_to_np</span><span class="p">(</span><span class="n">model_y</span> <span class="o">+</span> <span class="n">model_yunc</span><span class="p">),</span> <span class="n">tf_to_np</span><span class="p">(</span><span class="n">model_y</span> <span class="o">-</span> <span class="n">model_yunc</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">yup</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ydown</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">true_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Truth&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
 
 
-<span class="n">mock_data</span> <span class="o">=</span> <span class="n">generate_mock_data</span><span class="p">(</span><span class="n">OUTDIR</span><span class="p">)</span>
+<span class="n">mock_data</span> <span class="o">=</span> <span class="n">generate_mock_data</span><span class="p">(</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 
 <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span> <span class="s1">&#39;mu_z&#39;</span><span class="p">,</span> <span class="s1">&#39;sigma_0&#39;</span><span class="p">,</span> <span class="s1">&#39;aSF&#39;</span><span class="p">,</span> <span class="s1">&#39;dSF&#39;</span><span class="p">,]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gp&#39;</span><span class="p">,</span>
-        <span class="n">mcz_obs</span><span class="o">=</span><span class="n">mock_data</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">mcz</span><span class="p">,</span>
-        <span class="n">compas_h5_filename</span><span class="o">=</span><span class="n">mock_data</span><span class="o">.</span><span class="n">compas_filename</span><span class="p">,</span>
+        <span class="n">compas_h5_filename</span><span class="o">=</span><span class="s2">&quot;../../../data/Z_all/COMPAS_Output.h5&quot;</span><span class="p">,</span>
         <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">param</span><span class="p">],</span>
         <span class="n">n_init</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="n">n_rounds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">n_pts_per_round</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">n_rounds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">n_pts_per_round</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
         <span class="n">model_plotter</span><span class="o">=</span><span class="n">plot_res</span><span class="p">,</span>
-        <span class="n">noise_level</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-        <span class="n">truth</span><span class="o">=</span><span class="p">{</span>
-            <span class="n">param</span><span class="p">:</span> <span class="n">mock_data</span><span class="o">.</span><span class="n">truth</span><span class="p">[</span><span class="n">param</span><span class="p">],</span>
-            <span class="s2">&quot;lnl&quot;</span><span class="p">:</span> <span class="n">mock_data</span><span class="o">.</span><span class="n">truth</span><span class="p">[</span><span class="s1">&#39;lnl&#39;</span><span class="p">]</span>
-        <span class="p">}</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span>
     <span class="p">)</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="n">acquisition_fns</span><span class="o">=</span><span class="p">[</span><span class="n">PredictiveVariance</span><span class="p">(),</span> <span class="n">ExpectedImprovement</span><span class="p">()],</span>
+        <span class="n">acquisition_fns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pv&quot;</span><span class="p">,</span> <span class="s2">&quot;ei&quot;</span><span class="p">],</span>
         <span class="n">outdir</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">OUTDIR</span><span class="si">}</span><span class="s2">/gp_</span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">/both&quot;</span><span class="p">,</span>
+
     <span class="p">)</span>
 
 </pre></div>
