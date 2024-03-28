@@ -4,6 +4,14 @@ __pycache__/
 *$py.class
 *tfevents*
 # C extensions
+
+*.gif
+*.png
+data
+**/outdir
+outdir/
+docs/studies/*D/
+docs/studies/1D/outdir/gp*
 *.so
 *.json
 *.html

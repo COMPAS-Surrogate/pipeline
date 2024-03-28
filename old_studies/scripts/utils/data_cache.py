@@ -13,7 +13,7 @@ class DataCache:
     y: xr.Dataset output data
 
     Has the following functions:
-    - save(fname): save data to netcdf file
+    - save(fname): __save_surrogate data to netcdf file
     - load(fname): load data from netcdf file
     - varying_params: the names of the varying parameters (X)
     - train_test_split(frac_train): split data into train and test sets based on frac_train (returns 2 DataCache objects)
