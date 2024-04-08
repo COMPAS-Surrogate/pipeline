@@ -14,6 +14,7 @@ os.makedirs(outdir, exist_ok=True)
 
 
 def load_data(frac=1):
+    np.random.seed(0)
     data = np.load('truth_lnls.npz')
     rel_neg_lnls = data['z']
     x, y = data['x'], data['y']
@@ -23,9 +24,12 @@ def load_data(frac=1):
     obs = rel_neg_lnls[mask].reshape(-1, 1)
     space = Box([min(x), min(y)], [max(x), max(y)])
 
+    idx =   np.random.shuffle(np.array([i for i in range(len(obs)) if obs[i] != 0]))
+    query, obs = query[idx], obs[idx]
+
     if frac < 1:
         n = int(frac * len(obs))
-        idx = np.random.choice(len(obs), n, replace=False)
+        idx = idx[:n]
         query, obs = query[idx], obs[idx]
 
     return Dataset(query, obs), space
@@ -64,19 +68,19 @@ def plot_data_and_gp(gp_model: Dataset, space: Box, label):
     plt.savefig(f'{outdir}/{label}.png')
 
 
-# data, space = load_data()
-# for f in np.linspace(0.01, 0.05, 20):
-#     train_data, _ = load_data(f)
-#     gp_model = get_model('gp', train_data, space)
-#     gp_model.optimize(train_data)
-#     npts = len(train_data.observations)
-#     plot_data_and_gp(gp_model, space, f'gp_npts{npts:003d}')
-# for f in np.geomspace(1, 0.05, 100):
-#     train_data, _ = load_data(f)
-#     gp_model = get_model('gp', train_data, space)
-#     gp_model.optimize(train_data)
-#     npts = len(train_data.observations)
-#     plot_data_and_gp(gp_model, space, f'gp_npts{npts:003d}')
+data, space = load_data()
+for f in np.linspace(0.01, 0.05, 20):
+    train_data, _ = load_data(f)
+    gp_model = get_model('gp', train_data, space)
+    gp_model.optimize(train_data)
+    npts = len(train_data.observations)
+    plot_data_and_gp(gp_model, space, f'gp_npts{npts:003d}')
+for f in np.geomspace(1, 0.05, 100):
+    train_data, _ = load_data(f)
+    gp_model = get_model('gp', train_data, space)
+    gp_model.optimize(train_data)
+    npts = len(train_data.observations)
+    plot_data_and_gp(gp_model, space, f'gp_npts{npts:003d}')
 
 
 make_gif(f"{outdir}/*.png", 'gp_with_true_vals.gif')

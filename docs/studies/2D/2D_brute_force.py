@@ -27,7 +27,7 @@ for param_set in [
         n_init=2,
         n_rounds=10,
         n_pts_per_round=5,
-        noise_level=1e-3,
+        noise_level=1e-2,
         acquisition_fns=['pv'],
         duration=dur
     )
