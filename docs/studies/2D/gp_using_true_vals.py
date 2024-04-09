@@ -24,7 +24,8 @@ def load_data(frac=1):
     obs = rel_neg_lnls[mask].reshape(-1, 1)
     space = Box([min(x), min(y)], [max(x), max(y)])
 
-    idx =   np.random.shuffle(np.array([i for i in range(len(obs)) if obs[i] != 0]))
+    idx =   np.array([i for i in range(len(obs)) if obs[i] != 0])
+    np.random.shuffle(idx)
     query, obs = query[idx], obs[idx]
 
     if frac < 1:
