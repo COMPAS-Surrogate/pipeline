@@ -1,5 +1,5 @@
 setup_pp_test\
-  -n 5\
+  -n 100\
   --outdir "out_aSF"\
   --compas_h5 "/fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5"\
   -p "aSF"\
