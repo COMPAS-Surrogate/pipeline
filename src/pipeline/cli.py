@@ -1,6 +1,10 @@
 from .pp_test.main import PPTest
 import click
 from typing import List
+from bilby.core.result import make_pp_plot
+from tqdm.auto import tqdm
+from bilby.core.result import Result
+import glob
 
 
 @click.command("setup_pp_test")
@@ -34,4 +38,23 @@ def setup_pp_test(
         n_rounds=n_rounds,
         n_pts_per_round=n_pts_per_round,
         acq_fns=acq_fns
+    )
+
+
+@click.command("pp_test")
+@click.argument(
+    "results_regex",
+    type=str,
+)
+@click.option(
+    "-f",
+    "--filename",
+    type=str,
+    help="Output filename",
+)
+def pp_test(results_regex, filename):
+    results = glob.glob(results_regex)
+    results = [Result.from_json(f) for f in tqdm(results)]
+    make_pp_plot(
+        results, filename=filename
     )
