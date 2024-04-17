@@ -28,6 +28,9 @@ import numpy as np
 from .data_analysis_job import AnalysisJob
 from .data_gen_job import DataGenJob
 
+import lnl_computer
+import lnl_surrogate
+
 DIR = os.path.dirname(os.path.abspath(__file__))
 SLURM_TEMPLATE = os.path.join(DIR, 'templates/slurm_template.sh')
 BASH_TEMPLATE = os.path.join(DIR, 'templates/bash_template.sh')
@@ -47,6 +50,8 @@ class PPTest:
             n_init: int,
             n_rounds: int, n_pts_per_round: int, acq_fns: List[str],
     ):
+        print("Setting up PP-Test for COMPAS-LnL Pipeline")
+        _log_versions()
         self.n = n
         self.outdir = _ensure_dir(outdir)
         self.compas_h5 = compas_h5
@@ -123,7 +128,6 @@ class PPTest:
         with open(os.path.join(self.outdir, 'bash_run.sh'), 'w') as f:
             f.write(template)
 
-
     def _write_slurm(self):
         # read the slurm template
         with open(SLURM_TEMPLATE, 'r') as f:
@@ -137,3 +141,8 @@ class PPTest:
         # write the slurm file
         with open(os.path.join(self.outdir, 'slurm_submit.sh'), 'w') as f:
             f.write(template)
+
+
+def _log_versions():
+    print(f"lnl_computer path: {lnl_computer.__file__}")
+    print(f"lnl_surrogate path: {lnl_surrogate.__file__}")
