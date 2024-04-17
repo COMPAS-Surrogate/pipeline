@@ -17,6 +17,7 @@ import glob
 @click.option("--n_rounds", type=int, help="Number of rounds")
 @click.option("--n_pts_per_round", type=int, help="Number of points per round")
 @click.option("-a", "--acq_fns", type=str, help="List of acquisition functions", multiple=True)
+@click.option("-t", "--time", type=str, help="Time to run the job", default="1:00:00")
 def setup_pp_test(
         n: int,
         outdir: str,
@@ -27,6 +28,7 @@ def setup_pp_test(
         n_rounds: int,
         n_pts_per_round: int,
         acq_fns: List[str],
+        time:str
 ):
     PPTest(
         n=n,
@@ -37,7 +39,8 @@ def setup_pp_test(
         n_init=n_init,
         n_rounds=n_rounds,
         n_pts_per_round=n_pts_per_round,
-        acq_fns=acq_fns
+        acq_fns=acq_fns,
+        time=time
     )
 
 

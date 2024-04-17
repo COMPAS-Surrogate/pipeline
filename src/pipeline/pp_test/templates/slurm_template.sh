@@ -3,7 +3,7 @@
 #SBATCH --job-name=pp_test
 #SBATCH --output={{LOG}}/job_%A_%a.out
 #SBATCH --error={{LOG}}/job_%A_%a.err
-#SBATCH --time=00:100:00
+#SBATCH --time={{TIME}}
 #SBATCH --array=0-{{NJOBS}}
 #SBATCH --mem=6G
 #SBATCH --cpus-per-task=1
