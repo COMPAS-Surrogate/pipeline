@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 #SBATCH --job-name=pp_test
 #SBATCH --output={{LOG}}/job_%A_%a.out
 #SBATCH --error={{LOG}}/job_%A_%a.err
