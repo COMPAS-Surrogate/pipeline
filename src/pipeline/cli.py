@@ -1,10 +1,10 @@
-from .pp_test import PPTest
+from .pp_test.main import PPTest
 import click
 from typing import List
 
 
 @click.command("setup_pp_test")
-@click.option("--n", type=int, help="Number of injections")
+@click.option("-n", type=int, help="Number of injections")
 @click.option("--outdir", type=str, help="Output directory")
 @click.option("--compas_h5", type=str, help="Path to COMPAS h5 file")
 @click.option("-p", "--params", type=str, help="List of parameters", multiple=True)

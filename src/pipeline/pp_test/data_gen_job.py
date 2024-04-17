@@ -21,7 +21,7 @@ from typing import List, Dict
 import subprocess
 import os
 
-MAKE_MOCK_OBS = 'make_mock_obs {compas_h5} --duration {duration} --fname {fname} --sf_sample "{sf_sample}"'
+MAKE_MOCK_OBS = 'make_mock_obs {compas_h5} --duration {duration} --fname {fname} --sf_sample "{sf_sample}" --save_plots'
 
 
 class DataGenJob(BaseJob):

@@ -3,8 +3,8 @@ import os
 from typing import Dict
 
 from abc import ABC, abstractmethod
-from .utils import _ensure_dir
 from typing import List, Dict
+
 
 import subprocess
 import os
@@ -78,7 +78,7 @@ def _ensure_dir(path_str):
     if not os.path.exists(dirname):
         os.makedirs(dirname, exist_ok=True)
 
-    return path_str
+    return os.path.abspath(path_str)
 
 
 def _write_json(d: Dict, path: str):

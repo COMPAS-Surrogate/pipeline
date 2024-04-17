@@ -82,5 +82,5 @@ testpaths = ["tests"]
 
 # CLI script
 [project.scripts]
-pp_test = "pipeline.cli:setup_pp_test"
+setup_pp_test = "pipeline.cli:setup_pp_test"
 

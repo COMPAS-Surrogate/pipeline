@@ -14,8 +14,8 @@ read_list_from_file() {
     done < "$1" # Specify the file to read
 }
 
-gen_cmd=($(read_list_from_file "gen_cmd.txt"))
-analy_cmd=($(read_list_from_file "analy_cmd.txt"))
+gen_cmd=($(read_list_from_file {{GEN_CMD_FILE}}))
+analy_cmd=($(read_list_from_file {{ANALY_CMD_FILE}}))
 
 echo "Mock cmd: ${gen_cmd[$SLURM_ARRAY_TASK_ID]}"
 echo "Surrogate cmd: ${analy_cmd[$SLURM_ARRAY_TASK_ID]}"

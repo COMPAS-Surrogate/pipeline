@@ -23,7 +23,7 @@ import os
 
 
 
-LNL_SURROGATE_RUNNER = 'train_lnl_surrogate --compas_h5_filename {compas_h5} --mcz_obs {mcz_obs} -o {outdir} --n_init {n_init} --n_rounds {n_rounds} --n_pts_per_round {n_pts_per_round} --save_plots --truth {truth} --duration {duration} {acquisition_fns} {params}'
+LNL_SURROGATE_RUNNER = 'train_lnl_surrogate --compas_h5_filename {compas_h5} --mcz_obs_filename {mcz_obs} -o {outdir} --n_init {n_init} --n_rounds {n_rounds} --n_pts_per_round {n_pts_per_round} --save_plots --truth {truth} --duration {duration} {acquisition_fns} {params}'
 
 class AnalysisJob(BaseJob):
 

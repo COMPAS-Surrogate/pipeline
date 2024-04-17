@@ -107,11 +107,22 @@ class PPTest:
         with open(self.analysis_cmd_file, 'w') as f:
             f.write('\n'.join(self._get_analysis_cmds()))
 
-        shutil.copy(BASH_TEMPLATE, os.path.join(self.outdir, 'bash_run.sh'))
+        self._write_bash()
         self._write_slurm()
 
         print(f"Run the following command to start the PP-Test:\n")
         print(f"sbatch {os.path.join(self.outdir, 'slurm_submit.sh')}")
+
+    def _write_bash(self):
+        # read the bash template
+        with open(BASH_TEMPLATE, 'r') as f:
+            template = f.read()
+
+        template = template.replace('{{GEN_CMD_FILE}}', self.data_gen_cmd_file)
+        template = template.replace('{{ANALY_CMD_FILE}}', self.analysis_cmd_file)
+        with open(os.path.join(self.outdir, 'bash_run.sh'), 'w') as f:
+            f.write(template)
+
 
     def _write_slurm(self):
         # read the slurm template
@@ -121,6 +132,8 @@ class PPTest:
         log_dir = _ensure_dir(os.path.join(self.outdir, 'logs'))
         template = template.replace('{{LOG}}', log_dir)
         template = template.replace('{{NJOBS}}', str(self.n))
+        template = template.replace('{{GEN_CMD_FILE}}', self.data_gen_cmd_file)
+        template = template.replace('{{ANALY_CMD_FILE}}', self.analysis_cmd_file)
         # write the slurm file
         with open(os.path.join(self.outdir, 'slurm_submit.sh'), 'w') as f:
             f.write(template)
