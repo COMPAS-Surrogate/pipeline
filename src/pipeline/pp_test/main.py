@@ -56,6 +56,7 @@ class PPTest:
         self.outdir = _ensure_dir(outdir)
         self.compas_h5 = compas_h5
         self.params = params
+
         self.injection_params = self._load_injections()
 
         self.job_kwgs = dict(
@@ -72,15 +73,7 @@ class PPTest:
 
     @property
     def injection_file(self):
-        fname = os.path.join(self.outdir, 'injection.csv')
-        if not os.path.exists(fname):
-            make_sf_table(
-                parameters=self.params,
-                n=self.n,
-                grid_parameterspace=False,
-                fname=os.path.join(self.outdir, 'injection.csv')
-            )
-        return fname
+        return os.path.join(self.outdir, 'injection.csv')
 
     @property
     def data_gen_cmd_file(self):
@@ -91,6 +84,12 @@ class PPTest:
         return os.path.join(self.outdir, 'analy_cmd.txt')
 
     def _load_injections(self) -> List[Dict[str, float]]:
+        make_sf_table(
+            parameters=self.params,
+            n=self.n,
+            grid_parameterspace=False,
+            fname=self.injection_file
+        )
         return pd.read_csv(self.injection_file).to_dict(orient='records')
 
     def _get_data_gen_cmds(self):
@@ -135,7 +134,7 @@ class PPTest:
         # replace the {{LOG}} and {{NJOBS}}
         log_dir = _ensure_dir(os.path.join(self.outdir, 'logs'))
         template = template.replace('{{LOG}}', log_dir)
-        template = template.replace('{{NJOBS}}', str(self.n-1))
+        template = template.replace('{{NJOBS}}', str(self.n - 1))
         template = template.replace('{{GEN_CMD_FILE}}', self.data_gen_cmd_file)
         template = template.replace('{{ANALY_CMD_FILE}}', self.analysis_cmd_file)
         # write the slurm file
