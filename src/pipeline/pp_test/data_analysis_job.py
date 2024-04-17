@@ -46,6 +46,7 @@ class AnalysisJob(BaseJob):
 
         # acq fns must be a list of strings, joined like "-a pv -a ei"
         self.acq_fns = ' '.join([f'-a {fn}' for fn in acq_fns])
+        _ensure_dir(f"{self.outdir}/plots")
 
     @property
     def params(self) -> str:
@@ -86,3 +87,4 @@ class AnalysisJob(BaseJob):
         super().pre_run_checks()
         assert os.path.exists(self.mock_obs_fname), f"Mock Observations file not found: {self.mock_obs_fname}"
         assert os.path.exists(self.truth_json), f"Truth file not found: {self.truth_json}"
+
