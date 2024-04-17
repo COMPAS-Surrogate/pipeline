@@ -1,6 +1,6 @@
 setup_pp_test\
   -n 5\
-  --outdir "out_aSF"\
+  --outdir "out_muz"\
   --compas_h5 "/fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5"\
   -p "muz"\
   --duration 2.0\
