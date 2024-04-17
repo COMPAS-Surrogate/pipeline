@@ -50,6 +50,7 @@ class PPTest:
             n_init: int,
             n_rounds: int, n_pts_per_round: int, acq_fns: List[str],
             time:str,
+            mem:str = '6G'
     ):
         print("Setting up PP-Test for COMPAS-LnL Pipeline")
         _log_versions()
@@ -58,7 +59,7 @@ class PPTest:
         self.compas_h5 = compas_h5
         self.params = params
         self.time = time
-
+        self.mem = mem
         self.injection_params = self._load_injections()
 
         self.job_kwgs = dict(
@@ -140,6 +141,7 @@ class PPTest:
         template = template.replace('{{GEN_CMD_FILE}}', self.data_gen_cmd_file)
         template = template.replace('{{ANALY_CMD_FILE}}', self.analysis_cmd_file)
         template = template.replace('{{TIME}}', self.time)
+        template = template.replace('{{MEM}}', self.mem)
         # write the slurm file
         with open(os.path.join(self.outdir, 'slurm_submit.sh'), 'w') as f:
             f.write(template)

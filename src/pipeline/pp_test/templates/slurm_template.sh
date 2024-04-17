@@ -5,7 +5,7 @@
 #SBATCH --error={{LOG}}/job_%A_%a.err
 #SBATCH --time={{TIME}}
 #SBATCH --array=0-{{NJOBS}}
-#SBATCH --mem=6G
+#SBATCH --mem={{MEM}}
 #SBATCH --cpus-per-task=1
 
 ml gcc/12.3.0 numpy/1.25.1-scipy-bundle-2023.07 && source /fred/oz101/avajpeyi/compas_env/bin/activate
