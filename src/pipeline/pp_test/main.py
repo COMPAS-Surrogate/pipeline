@@ -135,7 +135,7 @@ class PPTest:
         # replace the {{LOG}} and {{NJOBS}}
         log_dir = _ensure_dir(os.path.join(self.outdir, 'logs'))
         template = template.replace('{{LOG}}', log_dir)
-        template = template.replace('{{NJOBS}}', str(self.n))
+        template = template.replace('{{NJOBS}}', str(self.n-1))
         template = template.replace('{{GEN_CMD_FILE}}', self.data_gen_cmd_file)
         template = template.replace('{{ANALY_CMD_FILE}}', self.analysis_cmd_file)
         # write the slurm file
