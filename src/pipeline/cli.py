@@ -29,8 +29,8 @@ def setup_pp_test(
         n_rounds: int,
         n_pts_per_round: int,
         acq_fns: List[str],
-        time:str,
-        mem:str
+        time: str,
+        mem: str
 ):
     PPTest(
         n=n,
@@ -61,6 +61,12 @@ def setup_pp_test(
 def pp_test(results_regex, filename):
     results = glob.glob(results_regex)
     results = [Result.from_json(f) for f in tqdm(results)]
-    make_pp_plot(
-        results, filename=filename
+    npts_list = [r.meta_data['npts'] for r in results]
+    # assert all the same
+    assert all([n == npts[0] for n in npts]), f"All results must have the same number of points f{npts_list}"
+
+    fig = make_pp_plot(
+        results, save=False
     )
+    fig.suptitle(f"N-Training pts: {npts_list[0]}")
+    fig.savefig(filename)
