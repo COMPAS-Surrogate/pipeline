@@ -32,7 +32,7 @@ def process_round(surr_dir, round_id):
     variable_files = glob.glob(f"{surr_dir}/out_mcmc/{VARIABLE.format(N=round_id)}")
 
 
-    outdir = os.path.dirname(normal_files[0].split('out_mcmc')[-1])
+    outdir = os.path.dirname(normal_files[0].split('out_mcmc')[0])
 
     save_pp_for_files(normal_files, f"{outdir}/pp_round{round_id}_normal")
     save_pp_for_files(high_mcmc_files, f"{outdir}/pp_round{round_id}_high_mcmc")
