@@ -111,7 +111,7 @@ def make_pp_plot(
         cache_pp_data(results, pp_datafn    )
     pp_data, n, n_gp = load_pp_datalist(pp_datafn)
     title = _get_title(combined_pval=_combined_pvalue(pp_data), n=n, surr_pts=n_gp)
-    return _plot_pp(pp_data, lines=lines, title=title, filename=filename, **kwargs, )
+    return _plot_pp(pp_data, n=n, lines=lines, title=title, filename=filename, **kwargs, )
 
 
 def _combined_pvalue(pp_data):
