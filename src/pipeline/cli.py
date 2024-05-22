@@ -1,9 +1,10 @@
 from .pp_test.main import PPTest
 import click
 from typing import List
-from bilby.core.result import make_pp_plot
+from pp_test.make_pp_plot import make_pp_plot
 from tqdm.auto import tqdm
 from bilby.core.result import Result
+import os
 import glob
 
 
@@ -48,9 +49,17 @@ def setup_pp_test(
 
 
 @click.command("pp_test")
-@click.argument(
-    "results_regex",
+@click.option(
+    "-r",
+    "--results_regex",
     type=str,
+    default=None,
+)
+@click.option(
+    "-c",
+    "--cached-json",
+    type=str,
+    help="Cached json file of PP data",
 )
 @click.option(
     "-f",
@@ -58,15 +67,17 @@ def setup_pp_test(
     type=str,
     help="Output filename",
 )
-def pp_test(results_regex, filename):
-    results = glob.glob(results_regex)
-    results = [Result.from_json(f) for f in tqdm(results)]
-    npts_list = [r.meta_data['npts'] for r in results]
-    # assert all the same
-    assert all([n == npts_list[0] for n in npts_list]), f"All results must have the same number of points f{npts_list}"
+def pp_test(results_regex, cached_pp_fn, filename):
+
+    if os.path.exists(cached_pp_fn):
+        results = None
+    else:
+        results = glob.glob(results_regex)
+        results = [Result.from_json(f) for f in tqdm(results)]
+        npts_list = [r.meta_data['npts'] for r in results]
+        # assert all the same
+        assert all([n == npts_list[0] for n in npts_list]), f"All results must have the same number of points f{npts_list}"
 
     fig = make_pp_plot(
-        results, save=False
+        cached_pp_fn, results=results, filename=filename
     )
-    fig.suptitle(f"N-Training pts: {npts_list[0]}")
-    fig.savefig(filename)
