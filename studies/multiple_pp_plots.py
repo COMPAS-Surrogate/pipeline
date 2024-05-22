@@ -26,14 +26,11 @@ def get_n_rounds(surr_dir):
     return max(rounds)
 
 
-def process_round(surr_dir, round_id):
+def process_round(surr_dir, round_id, outdir):
     normal_files = glob.glob(f"{surr_dir}/out_mcmc/{NORMAL.format(N=round_id)}")
     high_mcmc_files = glob.glob(f"{surr_dir}/out_mcmc/{HIGH_MCMC.format(N=round_id)}")
     variable_files = glob.glob(f"{surr_dir}/out_mcmc/{VARIABLE.format(N=round_id)}")
-
-
-    outdir = os.path.dirname(normal_files[0].split('out_mcmc')[0])
-
+    os.makedirs(outdir, exist_ok=True)
     save_pp_for_files(normal_files, f"{outdir}/pp_round{round_id}_normal")
     save_pp_for_files(high_mcmc_files, f"{outdir}/pp_round{round_id}_high_mcmc")
     save_pp_for_files(variable_files, f"{outdir}/pp_round{round_id}_variable")
@@ -61,9 +58,12 @@ def main(base_dir):
         variable_files = glob.glob(f"{mcmc_base}/{VARIABLE.format(N=round)}")
         print(f"{round}\t{len(normal_files)}\t{len(high_mcmc_files)}\t{len(variable_files)}")
 
+    outdir = f"{base_dir}/pp_plots"
+    os.makedirs(outdir, exist_ok=True)
+    print("Saving PP plots to: ", outdir)
     for round in range(n_rounds):
         print(f"Processing round {round}...")
-        process_round(surr_base, round)
+        process_round(surr_base, round, outdir)
 
 
 if __name__ == "__main__":
