@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import logging
 from typing import List, Dict
 import json
+import pickle
 
 logger = logging.getLogger('bilby')
 
@@ -85,13 +86,14 @@ def save_pp_datalist(pp_datalist: List[PP_DATA], n_sim: int, n_gp: int, filename
         n_sim=n_sim,
         n_gp=n_gp
     )
-    with open(filename, 'w') as f:
-        json.dump(data, f)
+    with open(filename, 'wb') as f:
+        # Use pickle.dump() to write the dictionary to the file
+        pickle.dump(data, f)
 
 
 def load_pp_datalist(filename: str):
-    with open(filename, 'r') as f:
-        data = json.load(f)
+    with open(filename, 'rb') as f:
+        data = pickle.load(f)
     pp_data = [PP_DATA.from_dict(pp) for pp in data['pp_data']]
     n_gp = data.get('n_gp', None)
     n_sim = data.get('n_sim', None)
