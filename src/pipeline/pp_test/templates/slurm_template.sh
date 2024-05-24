@@ -8,7 +8,7 @@
 #SBATCH --mem={{MEM}}
 #SBATCH --cpus-per-task=1
 
-ml gcc/12.3.0 numpy/1.25.1-scipy-bundle-2023.07 && source /fred/oz101/avajpeyi/compas_env/bin/activate
+ml gcc/11.2.0 python/3.9.6 && source /fred/oz303/avajpeyi/venvs/compas_env/bin/activate
 
 readarray -t gen_cmd < '{{GEN_CMD_FILE}}'
 readarray -t analy_cmd < '{{ANALY_CMD_FILE}}'
