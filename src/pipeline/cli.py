@@ -2,6 +2,7 @@ from .pp_test.main import PPTest
 import click
 from typing import List
 from pp_test.make_pp_plot import make_pp_plot
+from pp_test.make_multiple_pp_plots import main
 from tqdm.auto import tqdm
 from bilby.core.result import Result
 import os
@@ -81,3 +82,13 @@ def pp_test(results_regex, cached_pp_fn, filename):
     fig = make_pp_plot(
         cached_pp_fn, results=results, filename=filename
     )
+
+
+@click.command("make_multiple_pp_plots")
+@click.option(
+    "--base_dir",
+    type=str,
+    help="Base directory",
+)
+def make_multiple_pp_plots(base_dir):
+    main(base_dir)
