@@ -1,8 +1,8 @@
 from .pp_test.main import PPTest
 import click
 from typing import List
-from pp_test.make_pp_plot import make_pp_plot
-from pp_test.make_multiple_pp_plots import main
+from .pp_test.make_pp_plot import make_pp_plot
+from .pp_test.make_multiple_pp_plots import main
 from tqdm.auto import tqdm
 from bilby.core.result import Result
 import os
