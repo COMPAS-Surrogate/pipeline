@@ -5,6 +5,11 @@ __pycache__/
 *tfevents*
 # C extensions
 
+
+outdir_*/
+TEST_*
+
+
 *.gif
 *.png
 data
