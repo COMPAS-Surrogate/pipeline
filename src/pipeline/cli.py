@@ -9,6 +9,11 @@ import os
 import glob
 
 
+from pipeline.pp_test.main import PPTest
+from pipeline.pp_test.make_pp_plot import make_pp_plot
+from pipeline.pp_test.make_multiple_pp_plots import main
+
+
 @click.command("setup_pp_test")
 @click.option("-n", type=int, help="Number of injections")
 @click.option("--outdir", type=str, help="Output directory")
@@ -68,9 +73,9 @@ def setup_pp_test(
     type=str,
     help="Output filename",
 )
-def pp_test(results_regex, cached_pp_fn, filename):
+def pp_test(results_regex, cached_json, filename):
 
-    if os.path.exists(cached_pp_fn):
+    if os.path.exists(cached_json):
         results = None
     else:
         results = glob.glob(results_regex)
@@ -80,7 +85,7 @@ def pp_test(results_regex, cached_pp_fn, filename):
         assert all([n == npts_list[0] for n in npts_list]), f"All results must have the same number of points f{npts_list}"
 
     fig = make_pp_plot(
-        cached_pp_fn, results=results, filename=filename
+        cached_json, results=results, filename=filename
     )
 
 
