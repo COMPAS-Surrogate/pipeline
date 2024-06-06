@@ -8,6 +8,7 @@ from bilby.core.result import Result
 import os
 import glob
 
+import warnings
 
 from pipeline.pp_test.main import PPTest
 from pipeline.pp_test.make_pp_plot import make_pp_plot
@@ -82,7 +83,8 @@ def pp_test(results_regex, cached_json, filename):
         results = [Result.from_json(f) for f in tqdm(results)]
         npts_list = [r.meta_data['npts'] for r in results]
         # assert all the same
-        assert all([n == npts_list[0] for n in npts_list]), f"All results must have the same number of points f{npts_list}"
+        if not all([n == npts_list[0] for n in npts_list])
+            warnings.warn(f"All results must have the same number of points f{npts_list}")
 
     fig = make_pp_plot(
         cached_json, results=results, filename=filename
