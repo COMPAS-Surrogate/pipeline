@@ -83,7 +83,7 @@ def pp_test(results_regex, cached_json, filename):
         results = [Result.from_json(f) for f in tqdm(results)]
         npts_list = [r.meta_data['npts'] for r in results]
         # assert all the same
-        if not all([n == npts_list[0] for n in npts_list])
+        if not all([n == npts_list[0] for n in npts_list]):
             warnings.warn(f"All results must have the same number of points f{npts_list}")
 
     fig = make_pp_plot(
