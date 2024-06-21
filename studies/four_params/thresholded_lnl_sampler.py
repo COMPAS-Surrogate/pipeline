@@ -29,7 +29,7 @@ def main(base_dir, regex, threshold_amt):
         print(f"Saved thresholded lnl surrogate model to {outdir}")
     pp_test(
         results_regex=f"{base_dir}/*/out_thresholded/*_result.json",
-        cached_pp_fn=None,
+        cached_json=f"{base_dir}/thresholded_pp_plot.json",
         filename=f"{base_dir}/thresholded_pp_plot.png"
     )
 
