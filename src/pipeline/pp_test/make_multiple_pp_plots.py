@@ -39,7 +39,7 @@ def process_round(surr_dir, round_id, outdir):
 def save_pp_for_files(files, label):
     results = [Result.from_json(f) for f in tqdm(files)]
     make_pp_plot(
-        pp_datafn=f"{label}.pkl",
+        pp_datafn=f"{label}.json",
         results=results,
         filename=f"{label}.png",
     )

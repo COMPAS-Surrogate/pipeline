@@ -60,7 +60,7 @@ def plot_corner(
     if prob is not None:
         kwgs["weights"] = prob
     if true_params is not None:
-        kwgs["truths"] = true_params
+        kwgs["reference_params"] = true_params
 
     _s = samples[s_labels[0]]
     bins = int(np.sqrt(len(_s)))

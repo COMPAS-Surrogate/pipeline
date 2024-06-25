@@ -10,6 +10,8 @@ import logging
 from typing import List, Dict
 import json
 import pickle
+import json
+
 
 logger = logging.getLogger('bilby')
 
@@ -29,14 +31,12 @@ class PP_DATA:
         self.p_value = p_value
         self.pp = pp
         self.label = label
-
-    def to_dict(self):
+    def __dict__(self):
         return dict(
             p_value=self.p_value,
             pp=self.pp,
             label=self.label
         )
-
     @classmethod
     def from_dict(cls, data: Dict):
         return cls(
@@ -69,34 +69,50 @@ def cache_pp_data(results: List[bilby.core.result.Result], filename: str) -> Lis
             pp=pp,
             label=f"{_get_label(key, results[0])} ({pvalue:2.3f})"
         ))
-
     save_pp_datalist(
         pp_datalist=pp_data,
         n_sim=len(results),
         n_gp=results[0].meta_data.get('npts', None),
         filename=filename
     )
-
     return pp_data
+
 
 
 def save_pp_datalist(pp_datalist: List[PP_DATA], n_sim: int, n_gp: int, filename: str):
     data = dict(
-        pp_data=[pp.to_dict() for pp in pp_datalist],
+        pp_data=[pp.__dict__() for pp in pp_datalist],
         n_sim=n_sim,
         n_gp=n_gp
     )
-    with open(filename, 'wb') as f:
-        # Use pickle.dump() to write the dictionary to the file
-        pickle.dump(data, f)
+
+    class NumpyEncoder(json.JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj, np.ndarray):
+                return obj.tolist()
+            return json.JSONEncoder.default(self, obj)
+
+    json_data = json.dumps(data, cls=NumpyEncoder)
+
+    with open(filename, 'w') as f:
+        f.write(json_data)
+    # write as JSON
+
 
 
 def load_pp_datalist(filename: str):
-    with open(filename, 'rb') as f:
-        data = pickle.load(f)
-    pp_data = [PP_DATA.from_dict(pp) for pp in data['pp_data']]
-    n_gp = data.get('n_gp', None)
-    n_sim = data.get('n_sim', None)
+    def as_numpy_array(dct):
+        if 'pp' in dct:
+            dct['pp'] = np.array(dct['pp'])
+        return dct
+
+    # Read JSON from file
+    with open('data.json', 'r') as f:
+        loaded_data = json.load(f, object_hook=as_numpy_array)
+
+    pp_data = [PP_DATA.from_dict(pp) for pp in loaded_data['pp_data']]
+    n_gp = loaded_data.get('n_gp', None)
+    n_sim = loaded_data.get('n_sim', None)
     return pp_data, n_sim, n_gp
 
 
@@ -166,7 +182,6 @@ def _plot_pp(pp_data: List[PP_DATA], n: int, lines=None, title=None, filename=No
     _add_ci_bounds(ax, n)
     for i, pp_data_i in enumerate(pp_data):
         plt.plot(X_DATA, pp_data_i.pp, lines[i], label=pp_data_i.label, **kwargs)
-
     ax.set_title(title)
     ax.set_xlabel("C.I.")
     ax.set_ylabel("Fraction of events in C.I.")

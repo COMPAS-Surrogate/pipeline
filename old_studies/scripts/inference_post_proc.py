@@ -38,7 +38,7 @@ def make_param_table(
     med_strs += [f"-"]
 
     max_lnl_idx = np.argmax(post.log_likelihood)
-    max_lnl_params = post.iloc[max_lnl_idx].to_dict()
+    max_lnl_params = post.iloc[max_lnl_idx].__dict__()
     maxl_strs = [f"{max_lnl_params[key]:.2f}" for key in params]
     maxl_strs += [f"{post.log_likelihood.max():.2f}"]
 
@@ -82,7 +82,7 @@ def plot_universes(
     # get the inferred universe -- highest likelihood universe
     mock_uni = MockPopulation.from_npz(mock_npz)
     max_lnl_idx = np.argmax(inference_result.posterior.log_likelihood)
-    max_lnl_params = inference_result.posterior.iloc[max_lnl_idx].to_dict()
+    max_lnl_params = inference_result.posterior.iloc[max_lnl_idx].__dict__()
     inferred_uni = get_universe_closest_to_parameters(
         det_matrix_h5, list(max_lnl_params.values())
     )
