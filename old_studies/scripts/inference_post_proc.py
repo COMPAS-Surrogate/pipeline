@@ -126,7 +126,7 @@ def plot_sampling_corner(
         be = hist_data.bin_edges
         h = hist_data.hist
         ax.hist(be[:-1], be, weights=h / np.max(h) * ytop, color="C2", histtype="step")
-    true_lnl = data_cache.true_lnl
+    true_lnl = data_cache.ref_lnl
     pred_lnl = model.prediction_str(data_cache.true_param_vals)
     fig.suptitle(f"model lnl: {true_lnl:.2f}\n" f"surro lnl: ${pred_lnl}$")
     corner_plt = f"{outdir}/corner.png"

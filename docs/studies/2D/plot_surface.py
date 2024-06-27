@@ -52,7 +52,7 @@ def plot_res(model, data, search_space: SearchSpace, **kwargs):
     axes[1].scatter(x_obs, y_obs, c='w', edgecolors='white', norm='log')
     axes[1].set_title('Model Uncertainty')
 
-    tru_lnzs = np.load(f"{OUTDIR}/truth.npz")
+    tru_lnzs = np.load(f"{OUTDIR}/reference_param.npz")
     z = tru_lnzs['z']
     x_range = [tru_lnzs['x'].min(), tru_lnzs['x'].max()]
     y_range = [tru_lnzs['y'].min(), tru_lnzs['y'].max()]
@@ -60,8 +60,8 @@ def plot_res(model, data, search_space: SearchSpace, **kwargs):
                    norm='log')
     axes[2].set_title('Truth')
 
-    if 'truth' in kwargs:
-        truth = kwargs['truth'].copy()
+    if 'reference_param' in kwargs:
+        truth = kwargs['reference_param'].copy()
         if 'lnl' in truth:
             # drop lnl
             truth.pop('lnl')
@@ -91,7 +91,7 @@ model_paths.sort(key=lambda x: int(x.split('_')[-1].split('pts')[0]))
 for model_path in model_paths:
     lnl_surr = LnLSurrogate.load(model_path)
     data = lnl_surr.data
-    plot_res(lnl_surr.model, data, search_space, truth=lnl_surr.truths)
+    plot_res(lnl_surr.model, data, search_space, truth=lnl_surr.reference_param)
     fname = f"{plot_out}/{model_path.split('_')[-1]}.png"
     plt.savefig(fname)
     img_pths.append(fname)

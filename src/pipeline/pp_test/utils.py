@@ -36,7 +36,7 @@ class BaseJob(ABC):
 
     @property
     def truth_json(self) -> str:
-        fname = _ensure_dir(os.path.join(self.outdir, 'truth.json'))
+        fname = _ensure_dir(os.path.join(self.outdir, 'reference_param.json'))
         return fname
 
     @property

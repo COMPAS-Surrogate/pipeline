@@ -51,8 +51,8 @@ def plot_data_and_gp(model, data:Dataset, search_space: SearchSpace, **kwargs):
         # scatter true data values
         ax.scatter(data.query_points[:, 0], data.query_points[:, 1], c='tab:red', marker='.', s=2)
 
-    if 'truth' in kwargs:
-        truth = kwargs['truth'].copy()
+    if 'reference_param' in kwargs:
+        truth = kwargs['reference_param'].copy()
         if 'lnl' in truth:
             # drop lnl
             truth.pop('lnl')

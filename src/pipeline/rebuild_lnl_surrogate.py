@@ -20,7 +20,7 @@ def rebuild_lnl_surrogate(training_csv: str, outdir: str, label: str = None, mod
     res_orig = run_sampler(lnl_surr, outdir=outdir, label=label)
     res_thresh = run_sampler(thres_lnl_surr, outdir=outdir, label=thresh_label, mcmc_kwargs=dict(color="tab:green"))
 
-    truths = {k: lnl_surr.truths[k] for k in lnl_surr.param_keys}
+    truths = {k: lnl_surr.reference_param[k] for k in lnl_surr.param_keys}
 
     plot_overlaid_corner(
         [res_thresh.posterior, res_orig.posterior],

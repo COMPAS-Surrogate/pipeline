@@ -19,7 +19,7 @@ print(mock_data.mcz_grid.n_bbh)
 # plt.figure()
 # for label, obs in data.items():
 #
-#     accum = np.minimum.accumulate(np.abs(obs-mock_data.truth['lnl']))
+#     accum = np.minimum.accumulate(np.abs(obs-mock_data.reference_param['lnl']))
 #     plt.plot(accum, label=label)
 # plt.xlabel("Iteration")
 # plt.ylabel("Abs(LnL Error) Training set")

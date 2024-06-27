@@ -197,7 +197,7 @@ def test_inference_run(clean=False):
         injection_parameters=true_parameters,
         nwalkers=50,
         outdir=OUTDIR,
-        label="true_lnl",
+        label="ref_lnl",
         clean=clean,
     )
 

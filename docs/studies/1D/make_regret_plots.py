@@ -15,6 +15,6 @@ for param in params:
     ]
     plot_multiple_regrets(
         regret_data, fname=f'outdir_rel/gp_{param}/regret.png',
-        true_min=mock_data.truth['lnl'],
+        true_min=mock_data.reference_param['lnl'],
     )
 

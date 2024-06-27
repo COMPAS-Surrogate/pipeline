@@ -69,7 +69,7 @@ for param in ['dSF']:#, 'muz', 'sigma0', 'aSF']:
         model_plotter=plot_res,
         noise_level=1e-3,
         truth={
-            param: mock_data.truth[param],
+            param: mock_data.reference_param[param],
             "lnl": 0
         }
     )
@@ -100,6 +100,6 @@ for param in ['dSF']:#, 'muz', 'sigma0', 'aSF']:
 #     ]
 #     plot_multiple_regrets(
 #         regret_data, fname=f'outdir_rel/gp_{param}/regret.png',
-#         true_min=mock_data.truth['lnl'],
+#         true_min=mock_data.reference_param['lnl'],
 #     )
 #

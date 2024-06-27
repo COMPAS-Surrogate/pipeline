@@ -21,7 +21,7 @@ def plot_res(model, data, search_space: SearchSpace, **kwargs):
     x_obs = data.query_points
     y_obs = data.observations
 
-    truths = kwargs['truth']
+    truths = kwargs['reference_param']
     # get keys that arnt lnl
     parm_names = list(truths.keys())
     parm_names.remove('lnl')
