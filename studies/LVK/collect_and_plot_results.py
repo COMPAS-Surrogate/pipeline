@@ -63,9 +63,11 @@ def collect_results(regex: str = REGEX):
             chains=[chain1, chain2],
             chainLabels=["gp_mu-LnL", "N(gp_mu, gp_sig)-LnL"],
             paramNames=PARAM_LATEX,
+            truthLabels=label,
+            plotName=f"{label}.pdf",
+            figureSize='APJ_page'
         )
-        fig.suptitle(label)
-        fig.savefig(f"{label}.png")
+
 
 
 collect_results()
