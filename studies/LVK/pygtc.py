@@ -293,6 +293,10 @@ def plotGTC(chains, **kwargs):
         assert all(__isstr(s) for s in chainLabels), \
             "chainLabels must be list of strings"
 
+
+    suptitle = kwargs.pop('suptitle', None)
+
+
     # Label the x and y axes, supports latex
     paramNames = kwargs.pop('paramNames', None)
     if paramNames is not None:
@@ -547,6 +551,8 @@ def plotGTC(chains, **kwargs):
     axisColor = '#333333'
     # Create the figure, and empty list for first column / last row
     fig = plt.figure(figsize=(figureWidth, figureWidth))
+    if suptitle:
+        fig.suptitle(suptitle)
     axV, axH = [], []
 
     # Minimum and maximum sample for each dimension
