@@ -1,0 +1,5 @@
+train_lnl_surrogate --compas_h5_filename /fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5 --mcz_obs_filename LVK --n_init 20 --n_rounds 100 --n_pts_per_round 20 --save_plots --max_threshold 50      --outdir out_50
+train_lnl_surrogate --compas_h5_filename /fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5 --mcz_obs_filename LVK --n_init 20 --n_rounds 100 --n_pts_per_round 20 --save_plots --max_threshold 500     --outdir out_500
+train_lnl_surrogate --compas_h5_filename /fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5 --mcz_obs_filename LVK --n_init 20 --n_rounds 100 --n_pts_per_round 20 --save_plots --max_threshold 5000    --outdir out_5000
+train_lnl_surrogate --compas_h5_filename /fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5 --mcz_obs_filename LVK --n_init 20 --n_rounds 100 --n_pts_per_round 20 --save_plots --max_threshold 50000   --outdir out_50000
+train_lnl_surrogate --compas_h5_filename /fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5 --mcz_obs_filename LVK --n_init 20 --n_rounds 100 --n_pts_per_round 20 --save_plots --max_threshold 500000  --outdir out_500000
