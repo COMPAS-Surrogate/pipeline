@@ -2,7 +2,7 @@
 #
 #SBATCH --job-name=lvk50
 #SBATCH --output=logs/lvk%j.out
-#SBATCH --error=log/lvk%j.err
+#SBATCH --error=logs/lvk%j.err
 #SBATCH --time=10:00:00
 #SBATCH --mem=40G
 #SBATCH --array=0-5

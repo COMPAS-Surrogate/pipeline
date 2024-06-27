@@ -4,7 +4,7 @@ from lnl_computer.mock_data import load_mock_data
 mock_data = load_mock_data('outdir')
 
 labels = ['Explore', 'Exploit', 'Both']
-params = ['dSF', 'muz', 'sigma0', 'aSF']
+params = ['dSF', 'mu_z', 'sigma_0', 'aSF']
 colors = ['blue', 'orange', 'green']
 
 data_fmt = 'outdir/gp_{param}/{label}/regret.csv'

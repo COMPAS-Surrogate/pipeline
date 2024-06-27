@@ -57,7 +57,7 @@ def plot_res(model, data, search_space: SearchSpace):
 
 
 
-for param in ['dSF']:#, 'muz', 'sigma0', 'aSF']:
+for param in ['dSF']:#, 'mu_z', 'sigma_0', 'aSF']:
     kwargs = dict(
         model_type='gp',
         mcz_obs=mock_data.observations.mcz,
@@ -89,7 +89,7 @@ for param in ['dSF']:#, 'muz', 'sigma0', 'aSF']:
 # mock_data = load_mock_data('outdir')
 #
 # labels = ['Explore', 'Exploit', 'Both']
-# params = ['dSF', 'muz', 'sigma0', 'aSF']
+# params = ['dSF', 'mu_z', 'sigma_0', 'aSF']
 # colors = ['blue', 'orange', 'green']
 #
 # data_fmt = 'outdir/gp_{param}/{label}/regret.csv'

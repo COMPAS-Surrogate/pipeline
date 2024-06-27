@@ -9,7 +9,7 @@ from compas_surrogate.data_generation.likelihood_cacher import (
     load_lnl_cache,
 )
 
-OUTDIR = "../out_muz_sigma0"
+OUTDIR = "../out_mu_z_sigma_0"
 GLOB_STR = f"{OUTDIR}/*.npz"
 
 CACHE_LNL_FILE = "cache_lnl.npz"
@@ -31,8 +31,8 @@ def plot_2d_density(x, y, z, true_x=None, true_y=None, scatter=False):
         ax.axhline(true_y, color="red", alpha=0.1)
 
     ax.set_aspect("equal")
-    ax.set_xlabel("muz")
-    ax.set_ylabel("sigma0")
+    ax.set_xlabel("mu_z")
+    ax.set_ylabel("sigma_0")
     fig.colorbar(cmap, label="LnL")
     fig.tight_layout()
     fig.savefig("lnl_2d_density" + "_scatter" * scatter + ".png")
@@ -44,7 +44,7 @@ def get_params_from_universe_paths(path):
     """
     import regex as re
 
-    param_names = ["n", "aSF", "bSF", "cSF", "dSF", "muz", "", "sigma0"]
+    param_names = ["n", "aSF", "bSF", "cSF", "dSF", "mu_z", "", "sigma_0"]
     params = re.findall(r"[-+]?\d*\.\d+|\d+", path)
     param_vals = {name: float(param) for name, param in zip(param_names, params)}
     param_vals.pop("")
@@ -63,11 +63,11 @@ def main(universes_glob=GLOB_STR, cache_lnl_file=CACHE_LNL_FILE):
 
     data_dict = load_lnl_cache("cache_lnl.npz")
     plt_kwgs = dict(
-        x=data_dict["muz"],
-        y=data_dict["sigma0"],
+        x=data_dict["mu_z"],
+        y=data_dict["sigma_0"],
         z=data_dict["lnl"],
-        true_x=data_dict["true_params"]["muz"],
-        true_y=data_dict["true_params"]["sigma0"],
+        true_x=data_dict["true_params"]["mu_z"],
+        true_y=data_dict["true_params"]["sigma_0"],
     )
     plot_2d_density(**plt_kwgs)
     plot_2d_density(**plt_kwgs, scatter=True)

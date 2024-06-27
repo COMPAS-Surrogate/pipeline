@@ -60,14 +60,14 @@ def make_lnl_table(
     print("Dataframes merged")
     print(df)
     true_vals = dict(
-        muz=mock_population.muz,
-        sigma0=mock_population.sigma0,
+        mu_z=mock_population.mu_z,
+        sigma_0=mock_population.sigma_0,
         aSF=mock_population.aSF,
         dSF=mock_population.dSF,
     )
-    plot_1d_lnl(df, true_vals, "muz")
-    if "sigma0" in df.columns:
-        plot_1d_lnl(df, true_vals, "sigma0")
+    plot_1d_lnl(df, true_vals, "mu_z")
+    if "sigma_0" in df.columns:
+        plot_1d_lnl(df, true_vals, "sigma_0")
 
 
 def plot_1d_lnl(df, true_vals, parm_name):
@@ -110,8 +110,8 @@ def plot_1d_lnl(df, true_vals, parm_name):
         yerr=lnl_std,
         fmt=".",
     )
-    ax0.axvline(true_vals[parm_name], label="True muz", color="red")
-    ax1.axvline(true_vals[parm_name], label="True muz", color="red")
+    ax0.axvline(true_vals[parm_name], label="True mu_z", color="red")
+    ax1.axvline(true_vals[parm_name], label="True mu_z", color="red")
     ax1.set_xlabel(parm_name)
     ax1.set_ylabel("std(lnl)")
     ax0.set_ylabel("lnl")

@@ -16,26 +16,26 @@ from compas_surrogate.plotting.image_utils import horizontal_concat, vertical_co
 def plot_1d(cache, true_val):
     cache_subset = cache.dataframe
     z = cache_subset["lnl"]
-    x, y = cache_subset["muz"].values, cache_subset["sigma0"].values
-    data = pd.DataFrame({"muz": x, "sigma0": y, "z": z})
-    data = data[data["muz"] < -0.35]
+    x, y = cache_subset["mu_z"].values, cache_subset["sigma_0"].values
+    data = pd.DataFrame({"mu_z": x, "sigma_0": y, "z": z})
+    data = data[data["mu_z"] < -0.35]
 
     num_x, num_y = len(np.unique(x)), len(np.unique(y))
-    xi = np.linspace(data.muz.min(), data.muz.max(), num_x)
-    yi = np.linspace(data.sigma0.min(), data.sigma0.max(), num_y)
+    xi = np.linspace(data.mu_z.min(), data.mu_z.max(), num_x)
+    yi = np.linspace(data.sigma_0.min(), data.sigma_0.max(), num_y)
     zi_at_true_y = griddata(
-        (data.muz, data.sigma0),
+        (data.mu_z, data.sigma_0),
         data.z,
-        (xi[None, :], true_val["sigma0"]),
+        (xi[None, :], true_val["sigma_0"]),
         method="linear",
         fill_value=-np.inf,
     )[0]
     zi_at_true_y = zi_at_true_y - zi_at_true_y.max()
 
     zi_at_true_x = griddata(
-        (data.muz, data.sigma0),
+        (data.mu_z, data.sigma_0),
         data.z,
-        (true_val["muz"], yi[None, :]),
+        (true_val["mu_z"], yi[None, :]),
         method="linear",
         fill_value=-np.inf,
     )[0]
@@ -44,24 +44,24 @@ def plot_1d(cache, true_val):
     # plot
     fig, axes = plt.subplots(2, 1, figsize=(4, 5))
     axes[0].plot(xi, zi_at_true_y)
-    axes[0].axvline(true_val["muz"], color="k", linestyle="--", lw=0.5)
+    axes[0].axvline(true_val["mu_z"], color="k", linestyle="--", lw=0.5)
     axes[0].set_ylabel("lnL-max(lnL)")
-    axes[0].set_xlabel("muz")
+    axes[0].set_xlabel("mu_z")
     axes[1].plot(yi, zi_at_true_x)
-    axes[1].axvline(true_val["sigma0"], color="k", linestyle="--", lw=0.5)
+    axes[1].axvline(true_val["sigma_0"], color="k", linestyle="--", lw=0.5)
     axes[1].set_ylabel("lnL-max(lnL)")
-    axes[1].set_xlabel("sigma0")
+    axes[1].set_xlabel("sigma_0")
     return fig
 
 
 def make_plots(cache, mock_uni, label=""):
     cache_subset = cache.dataframe
     z = cache_subset["lnl"] - cache_subset["lnl"].max()
-    x, y = cache_subset["muz"].values, cache_subset["sigma0"].values
+    x, y = cache_subset["mu_z"].values, cache_subset["sigma_0"].values
     data = pd.DataFrame({"x": x, "y": y, "z": z})
     num_x, num_y = len(np.unique(x)), len(np.unique(y))
     plt_range = [data.x.min(), data.x.max(), y.min(), y.max()]
-    true_x, true_y = mock_uni.muz, mock_uni.sigma0
+    true_x, true_y = mock_uni.mu_z, mock_uni.sigma_0
 
     fig, ax = plt.subplots(1, 1, figsize=(5, 4))
     cmap_args = dict(cmap="RdBu", vmin=-3, vmax=0)
@@ -71,8 +71,8 @@ def make_plots(cache, mock_uni, label=""):
     cb = ax.pcolormesh(xi, yi, zi, **cmap_args)
     fig.colorbar(cb, ax=ax, label="lnL-max(lnL)")
     ax.axis(plt_range)
-    ax.set_xlabel("muz")
-    ax.set_ylabel("sigma0")
+    ax.set_xlabel("mu_z")
+    ax.set_ylabel("sigma_0")
     ax.scatter(true_x, true_y, marker="+", color="k", s=100)
     ax.axvline(true_x, color="k", linestyle="--", lw=0.5)
     ax.axhline(true_y, color="k", linestyle="--", lw=0.5)
@@ -160,7 +160,7 @@ def main_plotter(large_grid, zoom_in_grid, idx):
         rm_orig=False,
     )
 
-    true = dict(muz=mock_population.muz, sigma0=mock_population.sigma0)
+    true = dict(mu_z=mock_population.mu_z, sigma_0=mock_population.sigma_0)
     plot1d_fig = plot_1d(large_cache, true)
     plot1d_fig.suptitle("Full range")
     plt.tight_layout()

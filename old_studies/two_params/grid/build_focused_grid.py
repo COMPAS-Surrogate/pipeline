@@ -17,8 +17,8 @@ generate_set_of_matricies(
     n=10000,
     save_images=False,
     outdir="grid_focused2",
-    parameters=["muz", "sigma0"],
+    parameters=["mu_z", "sigma_0"],
     save_h5_fname="focused_data2.h5",
-    custom_ranges={"muz": (-0.46, -0.45), "sigma0": (0.20, 0.21)},
+    custom_ranges={"mu_z": (-0.46, -0.45), "sigma_0": (0.20, 0.21)},
     grid_parameterspace=True,
 )

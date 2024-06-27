@@ -22,10 +22,10 @@ def make_plots(det_fname, mock_uni, outdir):
     norm_p = exp_norm_scale_log_data(cache_subset["lnl"])
 
     LEVELS = np.quantile(norm_p, [0.1, 0.5, 0.68, 0.95, 1])
-    true_params = [cache.true_dict["muz"], cache.true_dict["sigma0"]]
+    true_params = [cache.true_dict["mu_z"], cache.true_dict["sigma_0"]]
     fig, ax = plot_probs(
-        cache_subset["muz"],
-        cache_subset["sigma0"],
+        cache_subset["mu_z"],
+        cache_subset["sigma_0"],
         norm_p,
         levels=LEVELS,
         cmap="Oranges",
@@ -34,8 +34,8 @@ def make_plots(det_fname, mock_uni, outdir):
     fig.savefig(f"{outdir}/lnl.png", dpi=300)
 
     fig, ax = plot_probs(
-        cache_subset["muz"],
-        cache_subset["sigma0"],
+        cache_subset["mu_z"],
+        cache_subset["sigma_0"],
         norm_p,
         levels=LEVELS,
         cmap="Oranges",
@@ -47,7 +47,7 @@ def make_plots(det_fname, mock_uni, outdir):
     fig, ax = plt.subplots(1, 1)
     x_range = [-0.471, -0.469]
     cache_subset = cache_subset[
-        (cache_subset["muz"] > x_range[0]) & (cache_subset["muz"] < x_range[1])
+        (cache_subset["mu_z"] > x_range[0]) & (cache_subset["mu_z"] < x_range[1])
     ]
     norm_p = exp_norm_scale_log_data(cache_subset["lnl"])
     y_range = [0.12, 0.26]
@@ -55,14 +55,14 @@ def make_plots(det_fname, mock_uni, outdir):
     lnl_in_sigma_bins = []
     for i in range(len(y_bins) - 1):
         y = norm_p[
-            (cache_subset["sigma0"] > y_bins[i])
-            & (cache_subset["sigma0"] < y_bins[i + 1])
+            (cache_subset["sigma_0"] > y_bins[i])
+            & (cache_subset["sigma_0"] < y_bins[i + 1])
         ]
         lnl_in_sigma_bins.append(np.sum(y))
     lnl_in_sigma_bins = np.array(lnl_in_sigma_bins)
     lnl_in_sigma_bins = lnl_in_sigma_bins / np.sum(lnl_in_sigma_bins)
     ax.plot(y_bins[:-1], lnl_in_sigma_bins)
-    ax.set_xlabel("sigma0")
+    ax.set_xlabel("sigma_0")
     ax.set_ylabel("lnl")
     fig.savefig(f"{outdir}/lnl_zoom_sigma.png", dpi=300)
 
