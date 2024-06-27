@@ -5,7 +5,7 @@
 #SBATCH --error=logs/lvk%j.err
 #SBATCH --time=10:00:00
 #SBATCH --mem=40G
-#SBATCH --array=0-5
+#SBATCH --array=0-10
 #SBATCH --cpus-per-task=1
 
 ml gcc/11.2.0 python/3.9.6 && source /fred/oz303/avajpeyi/venvs/compas_env/bin/activate
