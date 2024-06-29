@@ -1,9 +1,9 @@
 import glob
-import os
+
 from bilby.core.result import read_in_result
-import h5py
 import pandas as pd
 from collections import namedtuple
+
 from pygtc import plotGTC
 
 REGEX = "/fred/oz303/avajpeyi/studies/cosmic_int/lvk/out_*/out_mcmc/*pts_result.json"
@@ -25,6 +25,23 @@ def _get_vfname(fname, roundidx):
     return fnames[0]
 
 
+import matplotlib.pyplot as plt
+
+
+def plot_lnls(lnl1, lnl2, label):
+    fig, axes = plt.subplots(2, 1, figsize=(5, 5))
+    ax = axes[0]
+    bins = ax.hist(lnl1, bins=100, alpha=0.5, label="gp_mu-LnL", histtype="stepfilled")
+    ax.hist(lnl2, bins=bins[1], alpha=0.5, label="N(gp_mu, gp_sig)-LnL", histtype="step")
+    ax.legend()
+    ax = axes[1]
+    ax.hist(lnl1, bins=100, alpha=0.5, label="gp_mu-LnL", histtype="stepfilled")
+    ax.hist(lnl2, bins=100, alpha=0.5, label="N(gp_mu, gp_sig)-LnL", histtype="step")
+    ax.legend()
+    fig.suptitle(label)
+    plt.savefig(f"/fred/oz101/avajpeyi/code/pipeline/studies/LVK/LNLs_{label}.pdf")
+
+
 def collect_results(regex: str = REGEX):
     fnames = glob.glob(regex)
     r_group = []
@@ -35,7 +52,6 @@ def collect_results(regex: str = REGEX):
         rid = int(f.split("/")[-1].split("_")[0].split("round")[1])
         r_round.append(rid)
         v = _get_vfname(f, rid)
-
         var_fname.append(v)
     data = pd.DataFrame(dict(
         fname=fnames,
@@ -55,10 +71,11 @@ def collect_results(regex: str = REGEX):
         # make same size of posterior
         min_size = min(len(res.posterior), len(vres.posterior))
         # make same size of posterior
-        chain1 = res.posterior.sample(min_size)[PARAM]
-        chain2 = vres.posterior.sample(min_size)[PARAM]
         npts = res.meta_data["npts"]
         label = f"{row.group}_{npts}pts"
+        plot_lnls(res.posterior["log_likelihood"], vres.posterior["log_likelihood"], label)
+        chain1 = res.posterior.sample(min_size)[PARAM]
+        chain2 = vres.posterior.sample(min_size)[PARAM]
         fig = plotGTC(
             chains=[chain1, chain2],
             chainLabels=["gp_mu-LnL", "N(gp_mu, gp_sig)-LnL"],
@@ -67,7 +84,6 @@ def collect_results(regex: str = REGEX):
             plotName=f"{label}.pdf",
             figureSize='APJ_page'
         )
-
 
 
 collect_results()
