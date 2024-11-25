@@ -2,7 +2,6 @@ from lnl_computer.cosmic_integration.mcz_grid import McZGrid
 from lnl_computer.observation import load_observation
 from lnl_computer.cosmic_integration.star_formation_paramters import DEFAULT_DICT
 import pandas as pd
-import
 
 FNAMES = {
     "5M": "/fred/oz101/avajpeyi/COMPAS_DATA/h5out_5M.h5",
