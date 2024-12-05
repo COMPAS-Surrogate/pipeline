@@ -13,6 +13,7 @@ import warnings
 from pipeline.pp_test.main import PPTest
 from pipeline.pp_test.make_pp_plot import make_pp_plot
 from pipeline.pp_test.make_multiple_pp_plots import main
+from pipeline.extract_all_simulation_kl_divergences import extract_all_simulation_kl_divergences
 
 
 @click.command("setup_pp_test")
@@ -99,3 +100,18 @@ def pp_test(results_regex, cached_json, filename):
 )
 def make_multiple_pp_plots(base_dir):
     main(base_dir)
+
+
+@click.command("compute_distances")
+@click.option(
+    "--base_dir",
+    type=str,
+    help="Base directory",
+)
+@click.option(
+    "--metric",
+    type=str,
+    help="Metric to compute (kl, ks, js)",
+)
+def compute_distances(base_dir, metric):
+    extract_all_simulation_kl_divergences(base_dir, metric)

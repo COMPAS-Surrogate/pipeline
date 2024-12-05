@@ -85,4 +85,5 @@ testpaths = ["tests"]
 setup_pp_test = "pipeline.cli:setup_pp_test"
 pp_test = "pipeline.cli:pp_test"
 make_multiple_pp_plots = "pipeline.cli:make_multiple_pp_plots"
+compute_distances = "pipeline.cli:compute_distances"
 
