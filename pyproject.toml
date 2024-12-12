@@ -8,16 +8,16 @@ train-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]  # list of folders that contain the packages (["."] by default)
-include = ["pipeline*"]  # package names should match these glob patterns (["*"] by default)
-exclude = ["pipeline.tests*"]  # exclude packages matching these glob patterns (empty by default)
+include = ["pp_test*"]  # package names should match these glob patterns (["*"] by default)
+exclude = ["pp_test.tests*"]  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
 
 [project]
-name = "pipeline"
+name = "pp_test"
 dynamic = ["version"] # scm versioning (using tags)
 requires-python = ">=3.8"
-description = "Pipeline tools for COMPAS LnL(d|θ)± ΔLnL(d|θ)"
+description = "pp_test tools for COMPAS LnL(d|θ)± ΔLnL(d|θ)"
 readme = "README.md"
 authors = [
     {name = "Avi Vajpeyi", email = "avi.vajpeyi@gmail.com" },
@@ -29,9 +29,11 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.8",
 ]
-#dependencies = [
-#    "lnl_surrogate@git+https://github.com/COMPAS-Surrogate/lnl_surrogate.git",
-#]
+dependencies = [
+    "compas_surrogate.acquisition_plotting",
+    "compas_surrogate.lnl_computer",
+    "compas_surrogate.lnl_surrogate",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -49,9 +51,9 @@ version_file = "src/pipeline/_version.py"
 
 
 [project.urls]  # Optional
-"Homepage" = "https://github.com/COMPAS-Surrogate/pipeline"
-"Bug Reports" = "https://github.com/COMPAS-Surrogate/pipeline/issues"
-"Source" = "https://github.com/COMPAS-Surrogate/pipeline/"
+"Homepage" = "https://github.com/COMPAS-Surrogate/pp_test"
+"Bug Reports" = "https://github.com/COMPAS-Surrogate/pp_test/issues"
+"Source" = "https://github.com/COMPAS-Surrogate/pp_test/"
 
 
 
@@ -82,7 +84,7 @@ testpaths = ["tests"]
 
 # CLI script
 [project.scripts]
-setup_pp_test = "pipeline.cli:setup_pp_test"
-pp_test = "pipeline.cli:pp_test"
-make_multiple_pp_plots = "pipeline.cli:make_multiple_pp_plots"
+setup_pp_test = "pp_test.cli:setup_pp_test"
+pp_test = "pp_test.cli:pp_test"
+make_multiple_pp_plots = "pp_test.cli:make_multiple_pp_plots"
 

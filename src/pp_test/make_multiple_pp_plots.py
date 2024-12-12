@@ -9,7 +9,7 @@ import glob
 import sys
 import os
 from tqdm.auto import tqdm
-from pipeline.pp_test.make_pp_plot import make_pp_plot, cache_pp_data
+from pp_test.pp_test.make_pp_plot import make_pp_plot, cache_pp_data
 from bilby.core.result import Result
 
 NORMAL = "round{N}_*pts_result.json"

@@ -39,7 +39,7 @@ def plot_lnls(lnl1, lnl2, label):
     ax.hist(lnl2, bins=100, alpha=0.5, label="N(gp_mu, gp_sig)-LnL", histtype="step")
     ax.legend()
     fig.suptitle(label)
-    plt.savefig(f"/fred/oz101/avajpeyi/code/pipeline/studies/LVK/LNLs_{label}.pdf")
+    plt.savefig(f"/fred/oz101/avajpeyi/code/pp_test/studies/LVK/LNLs_{label}.pdf")
 
 
 def collect_results(regex: str = REGEX):

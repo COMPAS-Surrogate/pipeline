@@ -103,9 +103,9 @@ def plot(train_csv, prior, outdir):
     plt.savefig(f"{outdir}/lnl_{len(train_data):002d}.png")
 
 
-def test_lnl_pipeline(tmp_path):
+def test_lnl_pp_test(tmp_path):
     np.random.seed(42)
-    outdir = f"{tmp_path}/test_lnl_pipeline"
+    outdir = f"{tmp_path}/test_lnl_pp_test"
     if os.path.exists(outdir):
         shutil.rmtree(outdir)
     os.makedirs(outdir, exist_ok=True)

@@ -1,3 +1,0 @@
-compas_python_utils@git+https://github.com/TeamCOMPAS/COMPAS.git
-lnl_computer@https://github.com/COMPAS-Surrogate/lnl_computer.git
-lnl_surrogate@https://github.com/COMPAS-Surrogate/lnl_surrogate.git

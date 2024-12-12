@@ -1,8 +1,8 @@
-from .pp_test.main import PPTest
+
 import click
 from typing import List
-from .pp_test.make_pp_plot import make_pp_plot
-from .pp_test.make_multiple_pp_plots import main
+from .make_pp_plot import make_pp_plot
+from .make_multiple_pp_plots import main
 from tqdm.auto import tqdm
 from bilby.core.result import Result
 import os
@@ -10,9 +10,9 @@ import glob
 
 import warnings
 
-from pipeline.pp_test.main import PPTest
-from pipeline.pp_test.make_pp_plot import make_pp_plot
-from pipeline.pp_test.make_multiple_pp_plots import main
+from .pp_test import PPTest
+from .make_pp_plot import make_pp_plot
+from .make_multiple_pp_plots import main
 
 
 @click.command("setup_pp_test")

@@ -1,5 +1,5 @@
 from lnl_surrogate import LnLSurrogate
-from pipeline.pp_test.make_pp_plot import make_pp_plot, PP_DATA
+from pp_test.make_pp_plot import make_pp_plot, PP_DATA
 import bilby
 
 import glob
@@ -7,7 +7,7 @@ import os
 import numpy
 from tqdm.auto import tqdm
 from lnl_surrogate.surrogate import build_surrogate
-from pipeline.cli import pp_test
+from pp_test.cli import pp_test
 import sys
 
 

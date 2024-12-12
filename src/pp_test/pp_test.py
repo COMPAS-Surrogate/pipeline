@@ -1,4 +1,4 @@
-"""Run PP Test for the COMPAS LnL-Pipeline
+"""Run PP Test for the COMPAS LnL-pp_test
 
 1. Generate the "injection" file (i.e. the file that contains the true parameters) + mock observations for each
 2. Run the COMPAS-LnL surrogate builder using data from the "injection" files
@@ -52,7 +52,7 @@ class PPTest:
             time:str,
             mem:str = '6G'
     ):
-        print("Setting up PP-Test for COMPAS-LnL Pipeline")
+        print("Setting up PP-Test for COMPAS-LnL pp_test")
         _log_versions()
         self.n = n
         self.outdir = _ensure_dir(outdir)
