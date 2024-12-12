@@ -1,7 +1,21 @@
 # CHANGELOG
 
 
+## v0.0.1 (2024-12-12)
+
+### Bug Fixes
+
+* fix: adjust readme ([`331130d`](https://github.com/COMPAS-Surrogate/pp_test/commit/331130da9812d1dd56b46ffd48bc5ed4fce602d3))
+
+* fix: release ci ([`64b12d7`](https://github.com/COMPAS-Surrogate/pp_test/commit/64b12d7d31abe1a5dade0f4d8909010271631665))
+
+
 ## v0.0.0 (2024-12-12)
+
+
+## v0.1.0 (2024-12-12)
+
+### Unknown
 
 * Merge branch 'main' of github.com:COMPAS-Surrogate/pipeline into main ([`2134fbc`](https://github.com/COMPAS-Surrogate/pp_test/commit/2134fbc6d2911b201ae8763ec5ccf5809c932b23))
 
