@@ -1,4 +1,7 @@
+[![PyPI version](https://badge.fury.io/py/compas-surrogate.pp_test.svg?icon=si%3Apython)](https://badge.fury.io/py/compas-surrogate.pp_test)
+
 # pp_test
+
 Pipeline code for the popsynth inference 
 
 ## Pipeline Steps:
