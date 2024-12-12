@@ -87,4 +87,5 @@ testpaths = ["tests"]
 setup_pp_test = "pp_test.cli:setup_pp_test"
 pp_test = "pp_test.cli:pp_test"
 make_multiple_pp_plots = "pp_test.cli:make_multiple_pp_plots"
+compute_distances = "pp_test.cli:compute_distances"
 
