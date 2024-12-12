@@ -1,10 +1,11 @@
-[train-system]
+[build-system]
 requires = [
     "setuptools>=64",
     "setuptools-scm>=8.0",
     "wheel"
 ]
-train-backend = "setuptools.build_meta"
+build-backend = "setuptools.build_meta"
+
 
 [tool.setuptools.packages.find]
 where = ["src"]  # list of folders that contain the packages (["."] by default)
@@ -14,7 +15,7 @@ namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
 
 [project]
-name = "pp_test"
+name = "compas_surrogate.pp_test"
 dynamic = ["version"] # scm versioning (using tags)
 requires-python = ">=3.8"
 description = "pp_test tools for COMPAS LnL(d|θ)± ΔLnL(d|θ)"
@@ -81,6 +82,20 @@ line_length = 79
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.setuptools_scm]
+version_file = "src/lnl_computer/_version.py"
+
+[tool.semantic_release]
+version_variable = "src/lnl_computer/_version.py:__version__"
+version_source = "commit"
+commit_version_number = true
+commit_subject = "chore(release): {version}"
+commit_message = "chore(release): {version}"
+tag_format = "v{version}"
+no_local_version = true
+
+
 
 # CLI script
 [project.scripts]
