@@ -84,10 +84,10 @@ line_length = 79
 testpaths = ["tests"]
 
 [tool.setuptools_scm]
-version_file = "src/lnl_computer/_version.py"
+version_file = "src/pp_test/_version.py"
 
 [tool.semantic_release]
-version_variable = "src/lnl_computer/_version.py:__version__"
+version_variable = "src/pp_test/_version.py:__version__"
 version_source = "commit"
 commit_version_number = true
 commit_subject = "chore(release): {version}"
