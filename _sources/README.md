@@ -1,4 +1,4 @@
-# popsynth_inference_pipeline
+# pp_test
 Pipeline code for the popsynth inference 
 
 ## Pipeline Steps:
